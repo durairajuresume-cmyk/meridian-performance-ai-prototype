@@ -147,3 +147,5 @@ built from scratch for Meridian.
 | Microsoft Teams alert workflow | "Send to Teams" → Teams Alert Preview modal → "Alert sent to Meridian Digital Team" toast; Alerts page channel column |
 | Meridian/BFSI AI guardrails | Header status pills (BFSI Guardrails Active, Privacy-safe Mode, Advisory Mode); Governance page guardrail cards and decline example |
 | Frequency intelligence as recommendation-only | Frequency Intelligence card and the fatigue-detection AI response both explicitly state recommendation-only, no auto-execution |
+
+_Deployed via GitHub → Vercel auto-deploy on every push to `main`._
