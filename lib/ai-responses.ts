@@ -130,3 +130,7 @@ export function generateAIResponse(prompt: string): AIResponse {
 
   return { id, prompt, ...fallbackResponse };
 }
+
+export function getHomeRecommendation(): AIResponse {
+  return generateAIResponse(promptChips[1]);
+}

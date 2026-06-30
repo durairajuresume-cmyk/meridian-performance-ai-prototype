@@ -5,6 +5,7 @@ import {
   CampaignFunnel,
   ConnectedSource,
   GuardrailItem,
+  PlatformRoas,
   ReportItem,
   RootCauseCard,
 } from "./types";
@@ -104,6 +105,21 @@ export const campaigns: Campaign[] = [
   },
 ];
 
+export const platformRoas: PlatformRoas[] = Array.from(
+  campaigns.reduce((byPlatform, campaign) => {
+    const roasValue = parseFloat(campaign.roas.replace("x", ""));
+    const values = byPlatform.get(campaign.platform) ?? [];
+    values.push(roasValue);
+    byPlatform.set(campaign.platform, values);
+    return byPlatform;
+  }, new Map<string, number[]>())
+)
+  .map(([platform, values]) => ({
+    platform,
+    roas: Math.round((values.reduce((sum, value) => sum + value, 0) / values.length) * 10) / 10,
+  }))
+  .sort((a, b) => b.roas - a.roas);
+
 export const campaignFunnels: Record<string, CampaignFunnel> = {
   "gold-loan-mumbai": {
     impressions: "8.4L",
@@ -143,6 +159,12 @@ export const campaignAttribution: Record<string, CampaignAttribution> = {
   "two-wheeler-south": { offlineMatchRate: 88, pendingReconciliation: 9, unmatched: 3 },
   "sme-loan-retargeting": { offlineMatchRate: 79, pendingReconciliation: 15, unmatched: 6 },
   "credit-card-acquisition": { offlineMatchRate: 90, pendingReconciliation: 8, unmatched: 2 },
+};
+
+export const attributionSummary: CampaignAttribution = {
+  offlineMatchRate: 84,
+  pendingReconciliation: 12,
+  unmatched: 4,
 };
 
 export const campaignRootCauses: Record<string, RootCauseCard[]> = {
@@ -216,6 +238,11 @@ export const reports: ReportItem[] = [
     id: "offline-attribution-report",
     name: "Offline Attribution Report",
     status: "Generating",
+    metrics: [
+      { label: "Offline Match Rate", value: "84%" },
+      { label: "Pending CRM Reconciliation", value: "12%" },
+      { label: "Unmatched Records", value: "4%" },
+    ],
     summaryBullets: [
       "Blended offline match rate at 84% via the CRM upload bridge",
       "12% of records pending CRM reconciliation across active campaigns",

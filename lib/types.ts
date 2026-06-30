@@ -55,11 +55,22 @@ export interface AIResponse {
   declined?: boolean;
 }
 
+export interface ReportMetric {
+  label: string;
+  value: string;
+}
+
 export interface ReportItem {
   id: string;
   name: string;
   status: "Ready" | "Generating" | "Scheduled";
   summaryBullets: string[];
+  metrics?: ReportMetric[];
+}
+
+export interface PlatformRoas {
+  platform: string;
+  roas: number;
 }
 
 export interface AlertRule {

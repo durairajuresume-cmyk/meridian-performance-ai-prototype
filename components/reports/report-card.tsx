@@ -44,6 +44,18 @@ export function ReportCard({
           {expanded ? "Hide Preview" : "Preview"}
         </Button>
       </CardHeader>
+      {report.metrics && (
+        <CardContent className="pt-3">
+          <div className="grid grid-cols-3 gap-2">
+            {report.metrics.map((metric) => (
+              <div key={metric.label} className="rounded-lg border border-border bg-slate-50 px-3 py-2.5">
+                <p className="text-[11px] text-muted">{metric.label}</p>
+                <p className="mt-0.5 text-sm font-semibold text-foreground">{metric.value}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      )}
       {expanded && (
         <CardContent>
           <div className="rounded-lg border border-border bg-slate-50 px-4 py-4">
